@@ -1,13 +1,7 @@
 from anki import create_anki_cards
 from pdftotext import pdftotxt
-from responder import responder_pregunta
 
 def main():
-    # Define la pregunta
-    pregunta = "¿Cuál es la osmolaridad (mOsm/L) de una solución que contiene NaCl 100 milimolar y KCl 50 milimolar?"
-
-    # Obtén la respuesta
-    respuesta = responder_pregunta(pregunta)
 
 
     # Change the name of the PDF file to the name of your PDF file
