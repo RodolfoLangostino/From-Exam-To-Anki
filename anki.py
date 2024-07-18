@@ -45,9 +45,9 @@ def create_anki_cards(pdf_content, output_file):
             print (f"\n{preguntas[i]}")
             for j, opcion in enumerate(opciones[i], 1):
                 print(f" {j}. {opcion}")
-            respuesta_correcta = input("\nIngrese el número de la respuesta correcta (1-4) o 'S' para salir: ")
+            respuesta_correcta = input("\nInsert the number of the answer (1 -4) or 'S' to save and shut down.")
             if respuesta_correcta.upper() == "S":
-                print("Saliendo del programa...")
+                print("Shutting down...")
                 break
             if respuesta_correcta.isdigit() and 1 <= int(respuesta_correcta) <= 4:            
                 try:
@@ -66,4 +66,4 @@ def create_anki_cards(pdf_content, output_file):
                 writer.writerow([contenido, reslist[i]])
         print(f"Las tarjetas de Anki se han generado en '{output_file}'")
     else:
-        print("Está vacia")
+        print("An error has occurred: The response list is empty")

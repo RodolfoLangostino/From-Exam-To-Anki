@@ -8,8 +8,8 @@ def pdftotxt(pdf_file, skip_pages=2):
         for num_pagina in range(skip_pages, num_paginas):
             pagina = lector_pdf.pages[num_pagina]
             texto += pagina.extract_text() + "\n"
-    print ("Se ha procesado el pdf a texto")
+    print ("The text has been extracted from the PDF file.")
     return texto
 
-# Ejemplo de uso
+# Example to use the function
 # pdftotxt("tu_archivo.pdf", "salida.txt")
