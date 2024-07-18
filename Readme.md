@@ -1,15 +1,16 @@
-FromExamToAnki allows you to convert from a pdf with questions to generate decks, on csv document, easily traductable to Anki cards, a popular spaced-repetition flashcard program.
+"FromExamToAnki allows you to convert from a PDF with questions to generate decks, on a CSV document, easily translatable to Anki cards, a popular spaced-repetition flashcard program.
 
 Keep reading to understand how to use it.
 
+## Installation
 
-## Install ##
-Install all the dependences with pip install -r requeriments.txt
+Install all the dependencies with pip install -r requirements.txt
 
-## Uso
-1. Clona el repositorio: `git clone https://github.com/tu-usuario/tu-proyecto.git`
-2. Navega al directorio del proyecto: `cd FromExamToAnki`
-3. Ejecuta el programa: `python main.py
+## Usage
+Clone the repository: git clone https://github.com/your-username/your-project.git
+Navigate to the project directory: cd FromExamToAnki
+Run the program: python main.py"
+
 
 
 

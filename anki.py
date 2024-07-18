@@ -45,7 +45,7 @@ def create_anki_cards(pdf_content, output_file):
             print (f"\n{preguntas[i]}")
             for j, opcion in enumerate(opciones[i], 1):
                 print(f" {j}. {opcion}")
-            respuesta_correcta = input("\nInsert the number of the answer (1 -4) or 'S' to save and shut down.")
+            respuesta_correcta = input("\nInsert the number of the answer (1 -4) or 'S' to shut down.")
             if respuesta_correcta.upper() == "S":
                 print("Shutting down...")
                 break
