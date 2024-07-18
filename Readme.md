@@ -7,7 +7,7 @@ Keep reading to understand how to use it.
 Install all the dependencies with pip install -r requirements.txt
 
 ## Usage
-Clone the repository: git clone https://github.com/your-username/your-project.git
+Clone the repository: git clone https://github.com/RodolfoLangostino/From-Exam-To-Anki.git
 Navigate to the project directory: cd FromExamToAnki
 Run the program: python main.py"
 
