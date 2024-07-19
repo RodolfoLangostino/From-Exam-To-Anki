@@ -4,9 +4,11 @@ Keep reading to understand how to use it.
 
 ## Installation
 
-Install all the dependencies with pip install -r requirements.txt
+Install all the dependencies with 
+pip install -r requirements.txt
 
 ## Usage
+
 Clone the repository: git clone https://github.com/RodolfoLangostino/From-Exam-To-Anki.git
 
 Navigate to the project directory: cd FromExamToAnki
