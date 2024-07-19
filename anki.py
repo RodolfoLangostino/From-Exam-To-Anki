@@ -45,11 +45,11 @@ def create_anki_cards(pdf_content, output_file):
             print (f"\n{preguntas[i]}")
             for j, opcion in enumerate(opciones[i], 1):
                 print(f" {j}. {opcion}")
-            respuesta_correcta = input("\nInsert the number of the answer (1 -4) or 'S' to shut down.")
+            respuesta_correcta = input("\nInsert the number of the answer (1 -4) or 'S' to shut down. ")
             if respuesta_correcta.upper() == "S":
                 print("Shutting down...")
                 break
-            if respuesta_correcta.isdigit() and 1 <= int(respuesta_correcta) <= 4:            
+            if respuesta_correcta.isdigit() and 1 <= int(respuesta_correcta) <= 4:
                 try:
                     respuesta_correcta = int(respuesta_correcta)
                     reslist.append(str(respuesta_correcta))
@@ -64,6 +64,6 @@ def create_anki_cards(pdf_content, output_file):
                 opciones_str = "\n".join([f"{j+1}. {opcion}" for j, opcion in enumerate(opciones[i])])
                 contenido = f"{pregunta}\n{opciones_str}"
                 writer.writerow([contenido, reslist[i]])
-        print(f"Las tarjetas de Anki se han generado en '{output_file}'")
+        print(f"The cards of Anki are done on'{output_file}'")
     else:
         print("An error has occurred: The response list is empty")
