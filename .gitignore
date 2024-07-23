@@ -3,9 +3,17 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# Añadidos por mí
 # CSV
 .csv
 
+# replit 
+.replit
+
+# PDF
+EXAMEN VIRO SIA.pdf
+
+# Fin de añadidos
 
 # C extensions
 *.so

@@ -239,6 +239,17 @@ pydantic = ">=1.7.4,<1.8 || >1.8,<1.8.1 || >1.8.1,<3.0.0"
 srsly = ">=2.4.0,<3.0.0"
 
 [[package]]
+name = "csvs"
+version = "0.1.1"
+description = "Parse CSV data for humans."
+optional = false
+python-versions = ">=2.7"
+files = [
+    {file = "csvs-0.1.1-py2.py3-none-any.whl", hash = "sha256:7e8af31016598d70aeb6f5435419843cd54d658d6344a24d1b8a184a8caf6fca"},
+    {file = "csvs-0.1.1.tar.gz", hash = "sha256:f06e9a650ed14975817c967efe501831d3652e203cfec8c01d3e56822d3172aa"},
+]
+
+[[package]]
 name = "cymem"
 version = "2.0.8"
 description = "Manage calls to calloc/free through Cython"
@@ -2188,4 +2199,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.10.0,<3.12"
-content-hash = "82696f783f2b5b59cf7c4d66cc65701690e3690970832ab84f60cf50dd456bbf"
+content-hash = "94ae6ed08c2f41fbc7a549d486bfae0001d847846a9bf4414d5239be02fc1888"

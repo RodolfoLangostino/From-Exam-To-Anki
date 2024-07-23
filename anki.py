@@ -1,18 +1,54 @@
 import csv
-import os
 import re
 
-def classify_questions_options(text):
+def count_characters(text):
+    points = len(re.findall(r'\.', text))
+    hyphens = len(re.findall(r'-', text))
+    parenth = len(re.findall(r'\)', text))
+
+    # Comparar las frecuencias de los caracteres
+    if points > hyphens and points > parenth:
+        return "."
+    elif hyphens > points and hyphens > parenth:
+        return "-"
+    elif parenth > points and parenth > hyphens:
+        return ")"
+    else:
+        return "."
+
+def count_options(text):
+    lines = text.split('\n')
+    first = [line[0] for line in lines if line]
+    first_chars_str = ''.join(first)
+    numbers = len(re.findall(r'[1-4]', first_chars_str))
+    letters = len(re.findall(r'[a-d]', first_chars_str))
+    uppletters = len(re.findall(r'[A-D]', first_chars_str))
+
+    # Comparar las frecuencias de los caracteres
+    if numbers > letters and numbers > uppletters:
+        return r'^\d+\.'
+    elif letters > numbers and letters > uppletters:
+        return r'^[a-d]\)'
+    elif uppletters > numbers and uppletters > letters:
+        return  r'^[A-D]\)'
+    else:
+        print ("There was an error detecting the options")
+
+def classify_questions_options(text,delimeter):
     lines = text.split('\n')
     questions = []
     options = []
     current_question = ""
     current_options = []
     question_number = 0
+    if delimeter == "":
+        delimeter = count_characters(text)  # Use the count_characters result to set the delimiter
+    rema = count_options(text)
+    pattern = r'^\d+[' + re.escape(delimeter) + r']'
 
     for line in lines:
         line = line.strip()
-        if re.match(r'^\d+\.', line):
+        if re.match(rema, line):
             num_end = line.find(".")
             num = int(line[:num_end])
             if num > question_number:
@@ -35,11 +71,20 @@ def classify_questions_options(text):
     if current_question and len(current_options) == 4:
         questions.append(current_question)
         options.append(current_options)
+
+    else:
+        print ("There was an error reading the file. ", current_question, current_options)
+
+    if not questions and not options:
+        print ("There was not questions either options")
+    elif not questions or not options:
+        print (f"The last question was {current_question}")
+
     return questions, options
 
-def create_anki_cards(pdf_content, output_file):
+def create_anki_cards(pdf_content, output_file, delimeter):
     reslist = []
-    preguntas, opciones = classify_questions_options(pdf_content)
+    preguntas, opciones = classify_questions_options(pdf_content, delimeter)
     if len(preguntas) > 4:
         for i in range(len(preguntas)):
             print (f"\n{preguntas[i]}")
@@ -64,6 +109,7 @@ def create_anki_cards(pdf_content, output_file):
                 opciones_str = "\n".join([f"{j+1}. {opcion}" for j, opcion in enumerate(opciones[i])])
                 contenido = f"{pregunta}\n{opciones_str}"
                 writer.writerow([contenido, reslist[i]])
-        print(f"The cards of Anki are done on'{output_file}'")
+        print(f"The cards of Anki are done on' {output_file}'")
     else:
-        print("An error has occurred: The response list is empty")
+        print(f"An error has occurred. Reslist: {reslist}")
+        print (f"Questions: {preguntas}, Options: {opciones}")
