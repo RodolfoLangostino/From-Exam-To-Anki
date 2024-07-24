@@ -5,7 +5,7 @@ from pdftotext import pdftotxt
 def main():
     # Change the name of the PDF file to the name of your PDF file
     #        "EXAMEN VIRO SIA.pdf
-    input_file = "EXAMEN VIRO SIA.pdf"
+    input_file = "Example.pdf"
     output_file = 'anki_cards.csv'
 
     while True:
@@ -21,10 +21,10 @@ def main():
     valid_delimiters = {'.', '-', ')'}
     while True:
         print ("Insert the delimiter between the number or options ")
-        delimeter = input("(default: autodetector, recommended: '.', '-', ')'): ")
+        delimeter = input("(default: autodetector, recommended: '.', '-', ')' : ")
         if delimeter == "" or delimeter in valid_delimiters:
             break
-        print("Invalid input. Please enter a valid delimiter (e.g., '.', '-', ')').")
+        print("Invalid input. Please enter a valid delimiter (e.g., '.', '-', ')'.")
 
     input_content = pdftotxt(input_file, skip_pages)
     create_anki_cards(input_content, output_file, delimeter)

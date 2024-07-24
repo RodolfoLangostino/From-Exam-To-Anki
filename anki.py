@@ -16,7 +16,7 @@ def count_characters(text):
     else:
         return "."
 
-def count_options(text):
+def count_options(text, delimiter):
     lines = text.split('\n')
     first = [line[0] for line in lines if line]
     first_chars_str = ''.join(first)
@@ -24,15 +24,22 @@ def count_options(text):
     letters = len(re.findall(r'[a-d]', first_chars_str))
     uppletters = len(re.findall(r'[A-D]', first_chars_str))
 
+    escaped_delimiter = re.escape(delimiter)
     # Comparar las frecuencias de los caracteres
     if numbers > letters and numbers > uppletters:
-        return r'^\d+\.'
+        rem = 1
+        print (f"rem {rem}")
+        return rem, r'^\d+' + escaped_delimiter
     elif letters > numbers and letters > uppletters:
-        return r'^[a-d]\)'
+        rem = 2
+        return rem, r'^[a-d]' + escaped_delimiter
     elif uppletters > numbers and uppletters > letters:
-        return  r'^[A-D]\)'
+        rem = 2
+        return rem, r'^[A-D]' + escaped_delimiter
     else:
-        print ("There was an error detecting the options")
+        print("There was an error detecting the options")
+        rem = 1
+        return rem, r'^\d+' + escaped_delimiter
 
 def classify_questions_options(text,delimeter):
     lines = text.split('\n')
@@ -43,37 +50,74 @@ def classify_questions_options(text,delimeter):
     question_number = 0
     if delimeter == "":
         delimeter = count_characters(text)  # Use the count_characters result to set the delimiter
-    rema = count_options(text)
-    pattern = r'^\d+[' + re.escape(delimeter) + r']'
+    rem, rema = count_options(text, delimeter)
+    escaped_delimiter = re.escape(delimeter)
+    # Patern es para buscar el numero de pregunta
+    pattern = r'^\d+' + escaped_delimiter
 
-    for line in lines:
-        line = line.strip()
-        if re.match(rema, line):
-            num_end = line.find(".")
-            num = int(line[:num_end])
-            if num > question_number:
+    # En caso de que sea delimeter una letra
+    if rem == 1: 
+        for line in lines:
+            line = line.strip()
+            if re.match(pattern, line): # creo que no hace falta patern
+                num_end = line.find(delimeter)
+                num = int(line[:num_end])
+                if num > question_number:
+                    if current_question and len(current_options) == 4:
+                        questions.append(current_question)
+                        options.append(current_options)
+                    current_question = line[num_end+1:].strip()
+                    current_options = []
+                    question_number = num
+                elif 1 <= num <= 4:
+                    current_options.append(line[num_end+1:].strip())
+            elif line == "":
+                continue
+            else:
+                if current_question and not current_options:
+                    current_question += " " + line
+                elif current_options:
+                    current_options[-1] += " " + line
+    
+        if current_question and len(current_options) == 4:
+            questions.append(current_question)
+            options.append(current_options)
+
+        else:
+            print ("There was an error reading the file. ", current_question, current_options)
+
+    # En caso de que sea solo numeros.
+    elif rem == 2 or rem == 3:
+        for line in lines:
+            line = line.strip()
+            # En caso de que sea una pregunta
+            if re.match(pattern, line):
+                num_end = line.find(delimeter)
+                num = int(line[:num_end])
                 if current_question and len(current_options) == 4:
                     questions.append(current_question)
                     options.append(current_options)
                 current_question = line[num_end+1:].strip()
                 current_options = []
-                question_number = num
-            elif 1 <= num <= 4:
+                question_number = num                    
+            # En caso de que sea una opción
+            elif re.match(rema, line): 
+                num_end = line.find(delimeter)
                 current_options.append(line[num_end+1:].strip())
-        elif line == "":
-            continue
+            elif line == "":
+                continue
+            else:
+                if current_question and not current_options:
+                    current_question += " " + line
+                elif current_options:
+                    current_options[-1] += " " + line
+
+        if current_question and len(current_options) == 4:
+            questions.append(current_question)
+            options.append(current_options)
+
         else:
-            if current_question and not current_options:
-                current_question += " " + line
-            elif current_options:
-                current_options[-1] += " " + line
-
-    if current_question and len(current_options) == 4:
-        questions.append(current_question)
-        options.append(current_options)
-
-    else:
-        print ("There was an error reading the file. ", current_question, current_options)
+            print ("There was an error reading the file. ", current_question, current_options)
 
     if not questions and not options:
         print ("There was not questions either options")
@@ -81,6 +125,7 @@ def classify_questions_options(text,delimeter):
         print (f"The last question was {current_question}")
 
     return questions, options
+
 
 def create_anki_cards(pdf_content, output_file, delimeter):
     reslist = []

@@ -24,7 +24,8 @@ How to Upload to Anki
 1. Download Anki Desk https://apps.ankiweb.net/
 2. We'll choose the option of import archive
 3. we'll upload the archive provided by From Exam to Anki (FETA)
-4. 
+4. Select the option of delimiter of (;)
+5. Finally, import the selection
 
 
 
